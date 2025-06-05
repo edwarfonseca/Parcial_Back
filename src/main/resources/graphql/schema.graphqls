@@ -1,46 +1,21 @@
-# Archivo: src/main/resources/graphql/schema.graphqls
-
-# Tipo Paciente
 type Paciente {
     id: ID!
     name: String!
     email: String!
-    createdAt: String
-    updatedAt: String
 }
 
-# Input para crear/actualizar pacientes
 input PacienteInput {
     name: String!
     email: String!
 }
 
-# Queries (consultas)
 type Query {
-    # Obtener todos los pacientes
     getPacientes: [Paciente!]!
-    
-    # Obtener un paciente por ID
     getPacienteById(id: ID!): Paciente
-    
-    # Buscar pacientes por nombre
-    findPacientesByName(name: String!): [Paciente!]!
-    
-    # Buscar paciente por email
-    findPacienteByEmail(email: String!): Paciente
-    
-    # Contar total de pacientes
-    countPacientes: Int!
 }
 
-# Mutations (modificaciones)
 type Mutation {
-    # Crear un nuevo paciente
     createPaciente(input: PacienteInput!): Paciente!
-    
-    # Actualizar un paciente existente
-    updatePaciente(id: ID!, input: PacienteInput!): Paciente
-    
-    # Eliminar un paciente
+    updatePaciente(id: ID!, input: PacienteInput!): Paciente!
     deletePaciente(id: ID!): Boolean!
 }
