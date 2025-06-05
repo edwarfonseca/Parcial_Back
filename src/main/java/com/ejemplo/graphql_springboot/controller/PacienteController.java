@@ -2,6 +2,7 @@ package com.ejemplo.graphql_springboot.controller;
 
 import com.ejemplo.graphql_springboot.model.Paciente;
 import com.ejemplo.graphql_springboot.service.PacienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -10,11 +11,8 @@ import java.util.List;
 @Controller
 public class PacienteController {
 
-    private final PacienteService pacienteService;
-
-    public PacienteController(PacienteService pacienteService) {
-        this.pacienteService = pacienteService;
-    }
+    @Autowired
+    private PacienteService pacienteService;
 
     @QueryMapping
     public List<Paciente> getPacientes() {
@@ -26,14 +24,32 @@ public class PacienteController {
         return pacienteService.getPacienteById(id);
     }
 
+    @QueryMapping
+    public Paciente getPacienteByEmail(@Argument String email) {
+        return pacienteService.findByEmail(email);
+    }
+
+    @QueryMapping
+    public Long countPacientes() {
+        return pacienteService.countPacientes();
+    }
+
     @MutationMapping
     public Paciente createPaciente(@Argument PacienteInput input) {
-        return pacienteService.createPaciente(input.getName(), input.getEmail());
+        try {
+            return pacienteService.createPaciente(input.getName(), input.getEmail());
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al crear paciente: " + e.getMessage());
+        }
     }
 
     @MutationMapping
     public Paciente updatePaciente(@Argument String id, @Argument PacienteInput input) {
-        return pacienteService.updatePaciente(id, input.getName(), input.getEmail());
+        try {
+            return pacienteService.updatePaciente(id, input.getName(), input.getEmail());
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al actualizar paciente: " + e.getMessage());
+        }
     }
 
     @MutationMapping

@@ -12,6 +12,8 @@ input PacienteInput {
 type Query {
     getPacientes: [Paciente!]!
     getPacienteById(id: ID!): Paciente
+    getPacienteByEmail(email: String!): Paciente
+    countPacientes: Int!
 }
 
 type Mutation {
