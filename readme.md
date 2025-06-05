@@ -41,3 +41,7 @@ mutation ActualizarPaciente  {
 mutation EliminarPaciente {
   deletePaciente(id: "6fb055c0-614a-498e-bda9-9092c1a19507")
 }
+
+Despliegue del Backend: https://parcial-back-72z4.onrender.com/graphql
+App desplegada: https://parcial-front.onrender.com/
+
